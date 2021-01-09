@@ -1,7 +1,9 @@
 all: r2r-tests unit_tests
 
-bins:
+bins: a.c
 	git clone --depth 1 https://github.com/radareorg/radare2-testbins bins
+	gcc a.c -o a.exe
+
 
 fuzz/targets:
 	git clone --depth 1 https://github.com/radareorg/radare2-fuzztargets fuzz/targets
