@@ -558,3 +558,29 @@ EXPECT=<<EOF
 |           0x00400506      55             push rbp                    ; test
 EOF
 RUN
+
+NAME=Reopening project after analysis
+FILE=malloc://512
+CMDS=<<EOF
+e prj.git=false
+
+P- test
+Po test
+o bins/elf/analysis/a.out.cpp
+aaaa
+Ps test
+pi 2
+
+oc -
+Po test
+pi 2
+
+P- test
+EOF
+EXPECT=<<EOF
+cmp byte [obj.completed.7696], 0
+jne 0x8a8
+cmp byte [obj.completed.7696], 0
+jne 0x8a8
+EOF
+RUN
