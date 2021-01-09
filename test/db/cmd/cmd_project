@@ -584,3 +584,29 @@ endbr64
 cmp byte [obj.completed.0], 0
 EOF
 RUN
+
+NAME=Reopening project after analysis
+FILE=malloc://512
+CMDS=<<EOF
+e prj.git=false
+
+P- test
+Po test
+o bins/elf/analysis/main
+aaaa
+Ps test
+pi 2
+
+oc -
+Po test
+pi 2
+
+P- test
+EOF
+EXPECT=<<EOF
+endbr64
+cmp byte [obj.completed.0], 0
+endbr64
+cmp byte [obj.completed.0], 0
+EOF
+RUN
